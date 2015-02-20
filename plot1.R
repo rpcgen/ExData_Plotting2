@@ -5,9 +5,9 @@
 createDataObject <- function(basedir='data') {
 
     url <- 'http://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip'
-    datafile <- sprintf('%s/data.zip', basedir)
 
     keyfiles <- list(
+        datafile       = sprintf('%s/data.zip', basedir),
         summary        = sprintf('%s/summarySCC_PM25.rds', basedir),
         classification = sprintf('%s/Source_Classification_Code.rds', basedir),
         processed      = sprintf('%s/processed.rds', basedir)
@@ -23,8 +23,8 @@ createDataObject <- function(basedir='data') {
             }
 
             dir.create(basedir)
-            download.file(url, datafile, ...)
-            unzip(datafile, exdir=basedir)
+            download.file(url, keyfiles$datafile, ...)
+            unzip(keyfiles$datafile, exdir=basedir)
 
             summary <- readRDS(keyfiles$summary)[,-3]
             classif <- readRDS(keyfiles$classification)
