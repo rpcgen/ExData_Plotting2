@@ -63,13 +63,15 @@ createDataObject <- function(basedir='data') {
 doAssignement <- function(data) {
 
     agg_data <- data[data$year %in% seq(1999, 2008) & data$fips == 24510, c('Emissions', 'year')]
-    agg_data <- aggregate(agg_data$Emissions/ 10e6, list(agg_data$year), sum)
+    agg_data <- aggregate(agg_data$Emissions / 1e3, list(agg_data$year), sum)
 
     agg_table <- as.table(agg_data$x)
     dimnames(agg_table) <- list(agg_data$Group.1)
 
-    par(mfcol=c(1,1))
-    barplot(agg_table, main='Total emissions by year in Baltimore City')
+    barplot(agg_table,
+            main='Total emissions by year in Baltimore City (in thousands)',
+            xlab='Year',
+            ylab='Emissions (thousands)')
 }
 
 

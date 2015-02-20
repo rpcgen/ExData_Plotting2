@@ -60,9 +60,18 @@ createDataObject <- function(basedir='data') {
 }
 
 # do the plotting work
-doAssignement <- function() {
-    par(mfcol=c(1,1))
-    hist(hpc$GlobalActivePower, col='red', xlab='Global Active Power (kilowatts)', main='Global Active Power')
+doAssignement <- function(data) {
+
+    agg_data <- data[data$year %in% seq(1999, 2008, by=3), c('Emissions', 'year')]
+    agg_data <- aggregate(agg_data$Emissions / 1e6, list(agg_data$year), sum)
+
+    agg_table <- as.table(agg_data$x)
+    dimnames(agg_table) <- list(agg_data$Group.1)
+
+    barplot(agg_table,
+            main='Emissions by year in EEUU',
+            xlab='Year',
+            ylab='Emissions (millions)')
 }
 
 
@@ -70,19 +79,18 @@ doAssignement <- function() {
 # ###
 
 # get data
-hpc <- {
+df <- {
     dataobj <- createDataObject()
     dataobj$getData()
     dataobj$loadData()
 }
 
 # plot on screen device
-#plot1()
+doAssignement(df)
 
 # plot on png device
-#png('plot1.png')
-#plot1()
-#dev.off()
+png('plot1.png')
+doAssignement(df)
+dev.off()
 
-# and... (╯°□°）╯︵ ┻━┻
-# work finished better go for a walk
+# and... work finished better go for a walk
