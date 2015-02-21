@@ -69,7 +69,7 @@ doAssignement <- function(data) {
     dimnames(agg_table) <- list(agg_data$Group.1)
 
     barplot(agg_table,
-            main='Total emissions by year in Baltimore City (in thousands)',
+            main='Emissions in Baltimore City',
             xlab='Year',
             ylab='Emissions (thousands)')
 }
